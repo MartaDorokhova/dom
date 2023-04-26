@@ -119,13 +119,16 @@ const buttonNo = document.createElement('div');
 buttonNo.className = 'delete-modal__button delete-modal__cancel-button';
 buttonNo.textContent ='Отмена';
 deleteModalButton.append(buttonNo);
-
 const buttonYes = document.createElement('div');
 buttonYes.className = 'delete-modal__button delete-modal__confirm-button';
 buttonYes.textContent ='Удалить';
 deleteModalButton.append(buttonYes);
 
-const clickButton = document.querySelector(".tasks-list");
+
+const clickButton = document.querySelector(".delete-button").forEach((cl)=>{
+console.log(cl)
+}); 
+console.log(clickButton);
 clickButton.addEventListener("click", (event) => {
     const idFind = event.target.closest('.task-item').dataset.taskId;
     modalHidden.className = 'modal-overlay';
@@ -137,23 +140,26 @@ buttonNo.addEventListener("click", (event) => {
     console.log('Отмена удаления')
 })
 buttonYes.addEventListener("click", (event) => {
-
     const element = event.target;
-    console.log(element);
-    const id = element.closest('.modal-overlay').dataset.taskId;
-    console.log(id);
-    const found = tasks.indexOf(tasks.find(task => task.id === id));
-    const resultSplice = tasks.filter(task => task.id !== id);
-    console.log(resultSplice);
+    const id = element.closest(".modal-overlay").dataset.taskId;
+    const found = tasks.indexOf(tasks.find((task) => task.id === id));
+    tasks.splice(found,1);
+    render();
     modalHidden.className = 'modal-overlay modal-overlay_hidden';
-    const render =() =>{
-        const tasksListContainer = document.querySelector(".tasks-list");
-        tasksListContainer.innerHTML =""
-        resultSplice.forEach((task) => {
-        const taskItem = createTaskItem(resultSplice.id, resultSplice.text, resultSplice.completed);
-        tasksListContainer.append(taskItem)
-        console.log(taskItem)
-      });}
-      render();
-        })
-    
+     })
+
+
+     document.addEventListener("keydown", (event) => {
+        const key = event.code;
+        if (event.code === "Tab") {
+            const backgroundBody = document.querySelector("body");
+            backgroundBody.className = "backgroundTab";
+            console.log(backgroundBody)
+            document.querySelectorAll(".task-item").forEach((el)=>{
+                el.classList.add('task-item1')
+            });
+            const buttonStyle = document.querySelectorAll("button").forEach((button)=>{
+                button.classList.add('buttonNew')
+            });
+        }   
+      });       
