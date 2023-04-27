@@ -125,27 +125,29 @@ buttonYes.textContent ='Удалить';
 deleteModalButton.append(buttonYes);
 
 
-const clickButton = document.querySelector(".delete-button").forEach((cl)=>{
-console.log(cl)
-}); 
-console.log(clickButton);
-clickButton.addEventListener("click", (event) => {
-    const idFind = event.target.closest('.task-item').dataset.taskId;
-    modalHidden.className = 'modal-overlay';
-    modalHidden.dataset.taskId = idFind;
-    })
+document.querySelectorAll(".delete-button").forEach((clickButton)=>{
+    clickButton.addEventListener("click", (event) => {
+   console.log( modalHidden.classList.contains("modal-overlay_hidden"));
+       const idFind = event.target.closest('.task-item').dataset.taskId;
+        console.log(idFind)
+        modalHidden.className = 'modal-overlay';
+        modalHidden.dataset.taskId = idFind;
+        document.querySelectorAll(".delete-button")
+
+});
+
+});
 
 buttonNo.addEventListener("click", (event) => {
-    modalHidden.className = 'modal-overlay modal-overlay_hidden';
-    console.log('Отмена удаления')
+    modalHidden.className = 'modal-overlay modal-overlay_hidden'; 
 })
 buttonYes.addEventListener("click", (event) => {
     const element = event.target;
     const id = element.closest(".modal-overlay").dataset.taskId;
     const found = tasks.indexOf(tasks.find((task) => task.id === id));
     tasks.splice(found,1);
-    render();
     modalHidden.className = 'modal-overlay modal-overlay_hidden';
+    render();
      })
 
 
@@ -154,7 +156,6 @@ buttonYes.addEventListener("click", (event) => {
         if (event.code === "Tab") {
             const backgroundBody = document.querySelector("body");
             backgroundBody.className = "backgroundTab";
-            console.log(backgroundBody)
             document.querySelectorAll(".task-item").forEach((el)=>{
                 el.classList.add('task-item1')
             });
